@@ -126,6 +126,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
+    pg (1.5.4)
     psych (5.1.0)
       stringio
     puma (6.4.0)
@@ -162,6 +163,11 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (7.1.0)
       actionpack (= 7.1.0)
       activesupport (= 7.1.0)
@@ -198,10 +204,12 @@ DEPENDENCIES
   bootsnap
   debug
   jwt
+  pg
   puma (>= 5.0)
   rack-cors
   rails (~> 7.1.0)
-  sqlite3 (~> 1.4)
+  rails_12factor
+  sqlite3
   tzinfo-data
 
 RUBY VERSION

@@ -3,12 +3,16 @@ class ApplicationController < ActionController::API
 
   def authenticate_user!
     token = request.headers['Authorization']&.split(' ')&.last
+    token2 = request.headers['Authorization']
+    Rails.logger.info("Received Authorization Header: #{token}")
+    Rails.logger.info("Received Authorization Header: #{token2}")
     render json: { error: 'Unauthorized' }, status: :unauthorized unless valid_token?(token)
   end
 
   private
 
   def valid_token?(token)
+    Rails.logger.info("Validating Token: #{token}")
     return false if token.nil?
 
     begin

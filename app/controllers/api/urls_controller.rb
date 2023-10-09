@@ -1,6 +1,6 @@
 module Api
   class UrlsController < ApplicationController
-    before_action :authenticate_user!, only: [:shorten]
+    before_action :authenticate_user!, only: [:shorten, :original_url]
 
     def shorten
       url = Url.new(original_url: params[:original_url])

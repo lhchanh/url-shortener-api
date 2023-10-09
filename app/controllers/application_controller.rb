@@ -3,9 +3,7 @@ class ApplicationController < ActionController::API
 
   def authenticate_user!
     token = request.headers['Authorization']&.split(' ')&.last
-    token2 = request.headers['Authorization']
     Rails.logger.info("Received Authorization Header: #{token}")
-    Rails.logger.info("Received Authorization Header: #{token2}")
     render json: { error: 'Unauthorized' }, status: :unauthorized unless valid_token?(token)
   end
 
@@ -16,6 +14,7 @@ class ApplicationController < ActionController::API
     return false if token.nil?
 
     begin
+      Rails.logger.info("Validating Token: #{Rails.application.secrets.secret_key_base}")
       JWT.decode(token, Rails.application.secrets.secret_key_base)[0]
     rescue JWT::DecodeError
       false

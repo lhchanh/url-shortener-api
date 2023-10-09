@@ -12,12 +12,20 @@ class ApplicationController < ActionController::API
   def valid_token?(token)
     Rails.logger.info("Validating Token: #{token}")
     return false if token.nil?
-
+  
     begin
-      Rails.logger.info("Validating Token: #{Rails.application.secrets.secret_key_base}")
-      JWT.decode(token, Rails.application.secrets.secret_key_base)[0]
-    rescue JWT::DecodeError
+      secret_key_base = Rails.application.credentials.secret_key_base
+  
+      Rails.logger.info("Secret Key Base: #{secret_key_base}")
+      
+      decoded_token = JWT.decode(token, secret_key_base)[0]
+      Rails.logger.info("Decoded Token: #{decoded_token}")
+  
+      decoded_token
+    rescue JWT::DecodeError => e
+      Rails.logger.error("JWT Decode Error: #{e.message}")
       false
     end
   end
+  
 end

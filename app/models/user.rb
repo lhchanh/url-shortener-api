@@ -12,7 +12,10 @@ class User < ApplicationRecord
   end
 
   def generate_jwt
-    JWT.encode({ id: id, exp: 5.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+    secret_key_base = Rails.application.credentials.secret_key_base
+  
+    Rails.logger.info("Secret Key Base: #{secret_key_base}")
+    JWT.encode({ id: id, exp: 5.days.from_now.to_i }, secret_key_base)
   end
 
   def generate_refresh_token
